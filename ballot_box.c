@@ -22,16 +22,14 @@ const ballot_box_t empty_ballot_box = NULL;
 
 void bb_destroy(ballot_box_t bb)
 {
-    ballot_box_t current = bb;
-    ballot_box_t temp;
-    
-    while (current){
-        temp = current->next;
-        ballot_destroy(current->ballot);
-        current = temp;
-    }
-    // i think we also need to somehow free the memory allocated to
-    // each pointer from bb_insert because there are memory leaks rn
+    while (bb){
+	ballot_box_t temp = bb->next;	
+        ballot_destroy(bb->ballot);
+	free(bb);
+
+        bb = temp;
+
+    }         
 }
 
 void bb_insert(ballot_box_t* bbp, ballot_t ballot)
