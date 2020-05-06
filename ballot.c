@@ -52,13 +52,10 @@ void ballot_destroy(ballot_t ballot)
     size_t i = 0;
 
     while (i < ballot->length){
-        char* str = (ballot->entries)[i].name;
-        free(str);
-        i++;
-        
+        free((ballot->entries)[i].name);
+        i++;    
     }
-    free(ballot);
-    
+    free(ballot);   
 }
 
 void ballot_insert(ballot_t ballot, char* name)
@@ -127,20 +124,13 @@ ballot_t read_ballot(FILE* inf)
     if (fread_line(inf) == NULL){
         return NULL;
     }
-    
-    
+
     while (input[0] != '%'){
 
         ballot_insert(b, input);
-
-              
-        free(input);
-        input = fread_line(inf);    
+        input = fread_line(inf);      
     }
-
-    free(input);
-    
-   
+    free(input);      
     return b;
 }
 
